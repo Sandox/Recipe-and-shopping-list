@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Receipe Book</a>
+
+  <div class="collapse navbar-collapse" >
+  <ul class="navbar-nav">
+    <li class="nav-item" routerLinkActive="active">
+      <a class="nav-link" routerLink="/recipes">Receipes</a>
+    </li>
+    <li class="nav-item" routerLinkActive="active">
+      <a class="nav-link" routerLink="/shopping-list">Shopping List</a>
+    </li>
+  </ul>
+  </div>
+
+  <ul class="nav navbar-nav-navbar-right">
+
+
+    <h5>Manage <span class="caret"></span></h5>
+    <select #cricket (change)="update($event)">
+      <option value="default"></option>
+      <option *ngFor="let player of players" [value]="player">
+        {{player}}
+      </option>
+    </select>
+
+
+    <!--<li class="dropdown" appDropDown>-->
+      <!--<a href="#" class="dropdown-toggle" role="button"> Manage<span class="caret"></span></a>-->
+      <!--<ul class="dropdown-menu">-->
+        <!--<li><a href="#">Action</a></li>-->
+        <!--<li><a href="#">Action</a></li>-->
+      <!--</ul>-->
+      <!--</li>-->
+  </ul>
+
+</nav>
+
+
