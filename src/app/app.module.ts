@@ -14,6 +14,7 @@ import { ShoppingListService } from './components/shoppinglist/shopping-list.ser
 import {AppRoutingModule} from "./app-routing,module/app-routing,module.module";
 import { RecipePlaceholderComponent } from './components/reciepes/recipe-placeholder/recipe-placeholder.component';
 import { EditRecipeComponent } from './components/reciepes/edit-recipe/edit-recipe.component';
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { EditRecipeComponent } from './components/reciepes/edit-recipe/edit-reci
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [ShoppingListService],
   bootstrap: [AppComponent]
