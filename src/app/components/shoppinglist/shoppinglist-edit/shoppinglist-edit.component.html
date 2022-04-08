@@ -55,9 +55,16 @@
           <button
             type="submit"
             class="btn btn-success"
-            [disabled]="shoppingForm.invalid" >Add</button>
-          <button type="button" class="btn btn-danger">Delete</button>
-          <button type="button" class="btn btn-primary">Clear</button>
+            [disabled]="shoppingForm.invalid" >{{ ingredientEditMode ? 'Update' : 'Add' }}</button> <!--Checks if we in editMode and will display Add or Save or the button using a tertinary expression[?]  -->
+          <button
+            type="button"
+            class="btn btn-danger"
+            *ngIf="ingredientEditMode"
+            (click)="onDelete()">Delete</button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            (Click)="onClear()">Clear</button>
         </div>
       </div>
     </form>
