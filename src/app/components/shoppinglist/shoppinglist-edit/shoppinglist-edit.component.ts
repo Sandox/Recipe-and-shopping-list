@@ -12,11 +12,6 @@ export class ShoppinglistEditComponent implements OnInit {
 
   ingredients: Ingredient[] = [];
 
-  //passing the name of the local reference on our html file through view child
-  @ViewChild('nameInput') nameReference:any;
-  @ViewChild('amountInput') amountReference:any;
-
-
   constructor(private service: ShoppingListService) {}
 
   ngOnInit(): void {
@@ -30,9 +25,9 @@ export class ShoppinglistEditComponent implements OnInit {
     alert(`Details: `+ 'Name: ' +newIngredient.name +' : '+ 'Amount: ' + newIngredient.amount);
   }
 
-  onSubmitForm(_userForm: any){
-    console.log(`Form Submitted : `, _userForm);
-  }
+  // onSubmitForm(_userForm: any){
+  //   console.log(`Form Submitted : `, _userForm);
+  // }
 
 
 }
