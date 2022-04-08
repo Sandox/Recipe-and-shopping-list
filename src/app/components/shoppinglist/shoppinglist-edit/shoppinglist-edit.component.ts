@@ -1,6 +1,8 @@
 import {Component, ElementRef, OnInit, ViewChild, EventEmitter, Output} from '@angular/core';
 import {Ingredient} from "../../../Shared/ingredient.model";
 import {ShoppingListService} from "../shopping-list.service";
+import {NgForm} from "@angular/forms";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-shoppinglist-edit',
@@ -9,30 +11,62 @@ import {ShoppingListService} from "../shopping-list.service";
 })
 export class ShoppinglistEditComponent implements OnInit {
 
+  @ViewChild('shoppingForm') capturedForm: NgForm;
+
+private subscription: Subscription = new Subscription;
   ingredients: Ingredient[] = [];
-
-  //passing the name of the local reference on our html file through view child
-  @ViewChild('nameInput') nameReference:any;
-  @ViewChild('amountInput') amountReference:any;
-
+  ingredientEditMode = false;
+  indexOfIngridentToEdit: number;
+  editedIngrident: Ingredient;
 
   constructor(private service: ShoppingListService) {}
 
   ngOnInit(): void {
     this.ingredients = this.service.getIngredients();
+    this.service.itemEditting.subscribe(
+      (index: number) => {
+        this.indexOfIngridentToEdit = index;
+        this.ingredientEditMode = true;
+        this.editedIngrident = this.service.getIngredientSelected(index);
+        this.capturedForm.setValue({
+          name: this.editedIngrident.name,
+          amount: this.editedIngrident.amount
+
+        })
+      }
+    );
   }
 
-  onAddItemIngridents(){
-    const newIngredientName = this.nameReference.nativeElement.value;
-    const newIngredientAmount = this.amountReference.nativeElement.value;
-    const newIngredient = new Ingredient(newIngredientName, newIngredientAmount);
-    this.service.addIngredient(newIngredient);
-    alert(`Details` + newIngredientName + newIngredientAmount + `.......` + newIngredient)
+  onAddItemIngridents(form: NgForm){
+   const value = form.value;
+    const newIngredient = new Ingredient(value.name, value.amount);
+    if(this.ingredientEditMode){// if editMode is true, dont add a new ingrident but update the selected ingrident
+      this.service.updateIngredientSelected(this.indexOfIngridentToEdit, newIngredient);
+    }else{
+      this.service.addIngredient(newIngredient);
+    }
+    alert(`Details: `+ 'Name: ' +newIngredient.name +' : '+ 'Amount: ' + newIngredient.amount);
+    this.ingredientEditMode = false;
+    form.reset();
   }
 
-  onSubmitForm(_userForm: any){
-    console.log(`Form Submitted : `, _userForm);
+  onClear(){
+    this.capturedForm.reset();
+    this.ingredientEditMode = false;
+    console.log('clicked');
   }
+
+  onDelete(){
+    this.service.deleteIngredient(this.indexOfIngridentToEdit);
+    this.onClear();
+  }
+
+  ngOnDestroy():void {
+    this.subscription.unsubscribe();
+  }
+  // onSubmitForm(_userForm: any){
+  //   console.log(`Form Submitted : `, _userForm);
+  // }
 
 
 }
