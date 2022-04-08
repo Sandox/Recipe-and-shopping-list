@@ -30,4 +30,9 @@ export class ShoppinglistEditComponent implements OnInit {
     alert(`Details` + newIngredientName + newIngredientAmount + `.......` + newIngredient)
   }
 
+  onSubmitForm(_userForm: any){
+    console.log(`Form Submitted : `, _userForm);
+  }
+
+
 }

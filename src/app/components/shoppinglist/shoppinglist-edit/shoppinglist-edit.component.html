@@ -1,17 +1,25 @@
 <div class="row">
   <h3>Shopping List</h3><br/>
   <div class="cols-xs-12">
-    <form>
-      <div class="row">
-        <div class="cols-sm-5" form-group>
+    <form
+      (ngSubmit)="onSubmitForm(shoppingForm)"
+      #shoppingForm="ngForm">
+        <div
+          class="cols-sm-5"
+          form-group>
           <label for="name">Name</label>
-          <input type="text" id="name" class="form-control" #nameInput>
+          <input
+            type="text" name="name"
+            class="form-control"
+            ngModel
+            required
+            minlength="3">
+          <div class="alert alert-danger"></div>
         </div>
         <div class="cols-sm-2" form-group>
           <label for="amount">Amount</label>
-          <input type="text" id="amount" class="form-control" #amountInput>
+          <input type="text" name="amount" class="form-control" ngModel>
         </div>
-      </div>
       <div class="row">
         <div class="cols-xs-12">
           <button type="submit" class="btn btn-success" (click)="onAddItemIngridents()">Add</button>
@@ -22,3 +30,5 @@
     </form>
   </div>
 </div>
+
+<!---->
