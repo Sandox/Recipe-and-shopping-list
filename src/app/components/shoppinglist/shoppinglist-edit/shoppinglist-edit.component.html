@@ -2,7 +2,7 @@
   <h3>Shopping List</h3><br/>
   <div class="cols-xs-12">
     <form
-      (ngSubmit)="onSubmitForm(shoppingForm)"
+      (ngSubmit)="onAddItemIngridents(shoppingForm)"
       #shoppingForm="ngForm">
         <div
           class="cols-sm-5"
@@ -13,16 +13,49 @@
             class="form-control"
             ngModel
             required
-            minlength="3">
-          <div class="alert alert-danger"></div>
-        </div>
-        <div class="cols-sm-2" form-group>
+            minlength="3"
+            #name="ngModel">
+          <div
+            *ngIf="name.invalid && name.touched"
+            class="alert alert-danger">
+            <p *ngIf="name.errors?.['required']">Name is required.</p>
+            <p *ngIf="name.errors?.['minlength']">Name Should be at least 3 Characters.</p>
+          </div>
+        </div><br/>
+        <div class="cols-sm-5" form-group>
           <label for="amount">Amount</label>
-          <input type="text" name="amount" class="form-control" ngModel>
-        </div>
+          <input
+            type="text"
+            name="amount"
+            class="form-control"
+            ngModel
+            required
+            #amount="ngModel">
+          <div *ngIf="amount.invalid && amount.touched"
+            class="alert alert-danger">
+            <p *ngIf="amount.errors?.['required']">Amount Field is required!</p>
+          </div>
+        </div><br/>
+
+
+      <!--************* Placing two input fields next to each other********************** -->
+      <!--<div class="input-group">-->
+        <!--&lt;!&ndash; declaration for first field &ndash;&gt;-->
+        <!--<input type="text" class="form-control" placeholder="Capture Name"  />-->
+        <!---->
+        <!--&lt;!&ndash; reducong the gap between them to zero &ndash;&gt;-->
+        <!--<span class="input-group-btn" style="width:60px;"></span>-->
+
+        <!--&lt;!&ndash; declaration for second field &ndash;&gt;-->
+        <!--<input type="text" class="form-control" placeholder="Capture Amount" />-->
+      <!--</div><br/>-->
+
       <div class="row">
         <div class="cols-xs-12">
-          <button type="submit" class="btn btn-success" (click)="onAddItemIngridents()">Add</button>
+          <button
+            type="submit"
+            class="btn btn-success"
+            [disabled]="shoppingForm.invalid" >Add</button>
           <button type="button" class="btn btn-danger">Delete</button>
           <button type="button" class="btn btn-primary">Clear</button>
         </div>
